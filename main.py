@@ -22,7 +22,10 @@ timeLeft = 2400 - timeWorked
 
 #divide timeleft by sixty to convert back into 
 minutesLeft, hoursLeft = math.modf((timeLeft / 60))
-minutesLeft = math.ceil(minutesLeft * 60)
+if minutesWorked > 0:
+    minutesLeft = 60 - minutesWorked
+else:
+    minutesLeft = 0
 
 print ("You've worked %s%d hours and %d%s minutes so far."% (wColor, hoursWorked, minutesWorked, dColor))
 print ("You still need to work %s%d hours and %d%s minutes to reach 40hrs." % (lColor, hoursLeft, minutesLeft, dColor))
