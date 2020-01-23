@@ -1,15 +1,29 @@
-11#import math module to enable splitting ints and decimal values:
+911#import math module to enable splitting ints and decimal values:
 import math
 import datetime
 
+#Set colors for fonts:
+green = '\033[32m'
+red = '\033[31m'
+dColor = '\033[m'
+
+#Print the welcome banner:
+print("/-------------------------------------\\")
+print("|Tim's Wonderful Time Card Calculator!|")
+print("\\-------------------------------------/")
+print("")
+
+
 #Query user for decimal formatted hours worked:
-arrivalTime = input("What time did you arrive today? (ex: 9:00, AM is assumed): ")
+fridayCheck = input("Is it Friday (y/n)?:")
+while fridayCheck != "y":
+    print("This tool only works on Fridays, work some more and then come back.")
+    fridayCheck = input("Is it Friday (y/n)?:")
+
+arrivalTime = input("Thank god.. What time did you arrive today? (ex: 9:00, AM is assumed): ")
 timeWorked = float(input("How many hours have you already worked in ADP? (ex: 34.67): "))
 
-#Set colors for fonts:
-gColor = '\033[32m'
-rColor = '\033[31m'
-dColor = '\033[m'
+
 
 #Verify that it's a calculation we can actually work with:
 if timeWorked < 17 or timeWorked > 40:
@@ -52,13 +66,30 @@ else:
         minutesLeft = 0
     hoursLeft = int(hoursLeft)
 
-    #Calculate the time the user can leave:
+    #Start calculating the time the user can leave:
     leftTime = datetime.datetime(2000, 1, 1, hoursLeft, minutesLeft, 0)
     leaveTime = arrivalTime + datetime.timedelta(hours=hoursLeft,minutes=minutesLeft)
     leaveTime = format(leaveTime, '%H:%M')
+    leaveHour, leaveMinute = leaveTime.split(":")
+    leaveHour = int(leaveHour)
+    leaveMinute = int(leaveMinute)
+    
+    #adjust hours to 12hr format
+    if leaveHour > 12:
+        leaveHour -= 12
+    if leaveHour == 12 or leaveHour < 7:
+        amPm = "pm"
+    else:
+        amPm = "am"
+    if leaveHour == 0:
+        amPm ="am"
+    leaveHour = str(leaveHour)
+    leaveMinute = str(leaveMinute)
+    leaveList = leaveHour, leaveMinute
+    leaveTime = ":".join(leaveList)
     
     #Give the user the computed results:
-    print ("You've worked %s%d hours and %d%s minutes so far this week."% (gColor, hoursWorked, minutesWorked, dColor))
-    print ("You still need to work %s%d hours and %d%s minutes to reach 40hrs." % (rColor, hoursLeft, minutesLeft, dColor))
+    print ("You've worked %s%d hours and %d%s minutes so far this week."% (green, hoursWorked, minutesWorked, dColor))
+    print ("You still need to work %s%d hours and %d%s minutes to reach 40hrs." % (red, hoursLeft, minutesLeft, dColor))
     lTime = str(leaveTime)
-    print ("You can leave at: %s%s%s" % (gColor,lTime,dColor))
+    print ("You can leave at: %s%s%s%s" % (green,lTime,amPm,dColor))
