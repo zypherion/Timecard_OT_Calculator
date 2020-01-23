@@ -8,10 +8,11 @@ red = '\033[31m'
 dColor = '\033[m'
 
 #Print the welcome banner:
+print("\033[32m")
 print("/-------------------------------------\\")
 print("|Tim's Wonderful Time Card Calculator!|")
 print("\\-------------------------------------/")
-print("")
+print("\033[m")
 
 
 #Query user for decimal formatted hours worked:
@@ -20,7 +21,7 @@ while fridayCheck != "y":
     print("This tool only works on Fridays, work some more and then come back.")
     fridayCheck = input("Is it Friday (y/n)?:")
 
-arrivalTime = input("Thank god.. What time did you arrive today? (ex: 9:00, AM is assumed): ")
+arrivalTime = input("Phew.. What time did you arrive today? (ex: 9:00, AM is assumed): ")
 timeWorked = float(input("How many hours have you already worked in ADP? (ex: 34.67): "))
 
 
@@ -72,7 +73,6 @@ else:
     leaveTime = format(leaveTime, '%H:%M')
     leaveHour, leaveMinute = leaveTime.split(":")
     leaveHour = int(leaveHour)
-    leaveMinute = int(leaveMinute)
     
     #adjust hours to 12hr format
     if leaveHour > 12:
@@ -84,7 +84,7 @@ else:
     if leaveHour == 0:
         amPm ="am"
     leaveHour = str(leaveHour)
-    leaveMinute = str(leaveMinute)
+    #leaveMinute = str(leaveMinute)
     leaveList = leaveHour, leaveMinute
     leaveTime = ":".join(leaveList)
     
