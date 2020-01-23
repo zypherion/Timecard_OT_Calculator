@@ -27,13 +27,13 @@ timeWorked = float(input("How many hours have you already worked in ADP? (ex: 34
 
 
 #Verify that it's a calculation we can actually work with:
-if timeWorked < 17 or timeWorked > 40:
+if timeWorked < 24 or timeWorked > 40:
     #clear screen:
     print(chr(27)+'[2j')
     print('\033c')
     print('\x1bc')
 
-    print("Sorry, I can't help you.. You've worked too much already this week or too little..")
+    print("Sorry, I can't help you.. You've worked too much already this week... or too little.")
 
 #If we can work with it:
 else:
@@ -70,26 +70,11 @@ else:
     #Start calculating the time the user can leave:
     leftTime = datetime.datetime(2000, 1, 1, hoursLeft, minutesLeft, 0)
     leaveTime = arrivalTime + datetime.timedelta(hours=hoursLeft,minutes=minutesLeft)
+    lTime = leaveTime.strftime("%I:%M%P")
     leaveTime = format(leaveTime, '%H:%M')
-    leaveHour, leaveMinute = leaveTime.split(":")
-    leaveHour = int(leaveHour)
-    
-    #adjust hours to 12hr format
-    if leaveHour > 12:
-        leaveHour -= 12
-    if leaveHour == 12 or leaveHour < 7:
-        amPm = "pm"
-    else:
-        amPm = "am"
-    if leaveHour == 0:
-        amPm ="am"
-    leaveHour = str(leaveHour)
-    #leaveMinute = str(leaveMinute)
-    leaveList = leaveHour, leaveMinute
-    leaveTime = ":".join(leaveList)
     
     #Give the user the computed results:
     print ("You've worked %s%d hours and %d%s minutes so far this week."% (green, hoursWorked, minutesWorked, dColor))
     print ("You still need to work %s%d hours and %d%s minutes to reach 40hrs." % (red, hoursLeft, minutesLeft, dColor))
     lTime = str(leaveTime)
-    print ("You can leave at: %s%s%s%s" % (green,lTime,amPm,dColor))
+    print ("You can leave at: %s%s%s" % (green,lTime,dColor))
